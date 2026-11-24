@@ -34,4 +34,4 @@ The résumé PDF is `public/Priyanshu_Parasar_Resume.pdf`.
 
 1. Push this repository to GitHub.
 2. Import it in Vercel — the Next.js preset needs no changes.
-3. Set `NEXT_PUBLIC_SITE_URL` to the production URL (for example `https://<project>.vercel.app`) so canonical URLs, the sitemap and Open Graph tags use the right origin. Redeploy after setting it.
+3. No environment variables are required: canonical URLs, the sitemap and Open Graph tags use Vercel's production domain automatically. Set `NEXT_PUBLIC_SITE_URL` only if you add a custom domain.

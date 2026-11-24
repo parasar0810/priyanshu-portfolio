@@ -11,8 +11,13 @@ export const site = {
   education: "B.Tech CSE, BML Munjal University · Class of 2027",
   description:
     "Priyanshu Parasar is a software engineer (B.Tech CSE, Class of 2027) in Gurugram, India, building backend systems and applied-AI infrastructure — including AegisOps, a multi-agent incident-investigation platform with human-approved, verified remediation.",
-  // Override with NEXT_PUBLIC_SITE_URL once a production domain exists.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  // NEXT_PUBLIC_SITE_URL wins (e.g. a custom domain); otherwise Vercel's production
+  // domain, which Vercel injects into every build; otherwise local development.
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
   email: "pparasar2004@gmail.com",
   github: "https://github.com/parasar0810",
   githubHandle: "parasar0810",
