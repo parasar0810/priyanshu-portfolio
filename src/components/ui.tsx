@@ -6,7 +6,7 @@ export function cx(...parts: (string | false | null | undefined)[]) {
 }
 
 export function Container({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cx("mx-auto w-full max-w-[1120px] px-5 sm:px-8", className)}>{children}</div>;
+  return <div className={cx("mx-auto w-full max-w-[1200px] px-5 sm:px-8", className)}>{children}</div>;
 }
 
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
@@ -97,7 +97,7 @@ export function ButtonLink({ href, children, variant = "primary", external, down
     ghost: "text-ink hover:text-accent-ink",
   }[variant];
   const cls = cx(
-    "group inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+    "group inline-flex items-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-colors",
     styles,
     className,
   );
@@ -143,7 +143,7 @@ export function ExternalLink({ href, children, className, ...rest }: ComponentPr
 
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <div className={cx("rounded-2xl border border-line bg-surface shadow-soft", className)}>{children}</div>
+    <div className={cx("rounded-lg border border-line bg-surface shadow-soft", className)}>{children}</div>
   );
 }
 
@@ -183,12 +183,12 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <header className="border-b border-line pb-12 pt-14 sm:pb-16 sm:pt-20">
+    <header className="pb-10 pt-10 sm:pb-12 sm:pt-14">
       <Container>
         <div className="max-w-3xl animate-rise">
           {eyebrow && <Eyebrow className="mb-4">{eyebrow}</Eyebrow>}
-          <h1 className="text-4xl font-semibold tracking-[-0.025em] text-ink sm:text-5xl">{title}</h1>
-          {lede && <p className="mt-5 text-lg leading-relaxed text-muted sm:text-xl">{lede}</p>}
+          <h1 className="text-[2.1rem] font-semibold tracking-[-0.025em] text-ink sm:text-[2.6rem]">{title}</h1>
+          {lede && <p className="mt-4 text-[1.05rem] leading-relaxed text-muted sm:text-lg">{lede}</p>}
           {children}
         </div>
       </Container>

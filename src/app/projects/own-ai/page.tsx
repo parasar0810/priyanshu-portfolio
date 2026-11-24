@@ -8,7 +8,7 @@ const project = getProject("own-ai")!;
 export const metadata: Metadata = {
   title: "OWN-AI",
   description:
-    "A from-scratch vector search and RAG platform in Python: HNSW, KD-tree and brute-force indexes, three distance metrics and a benchmarking workflow.",
+    "A vector database written from scratch in C++: HNSW, KD-tree and brute-force k-NN, three distance metrics and a local RAG pipeline with Ollama.",
   alternates: { canonical: "/projects/own-ai" },
   openGraph: { url: "/projects/own-ai", type: "article", images: ["/opengraph-image"] },
 };
@@ -34,7 +34,7 @@ export default function OwnAiPage() {
         <ul>
           <li>Ingests documents, chunks them and stores 768-dimensional embeddings generated locally with Ollama.</li>
           <li>Searches with cosine, Euclidean or Manhattan distance.</li>
-          <li>Exposes search and document question-answering through FastAPI REST endpoints.</li>
+          <li>Exposes insert, delete, search, benchmark and document question-answering through a REST API (C++, cpp-httplib).</li>
           <li>Benchmarks and visualises how each index strategy behaves, including search latency.</li>
         </ul>
 
@@ -49,8 +49,11 @@ export default function OwnAiPage() {
           ]}
         />
         <p className="text-sm text-muted">
-          The source for OWN-AI isn’t published on GitHub yet, so this page describes the project at the level of my
-          résumé.
+          The full source is on{" "}
+          <a href="https://github.com/parasar0810/OWN-AI" target="_blank" rel="noopener noreferrer">
+            GitHub<span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          .
         </p>
       </CaseStudyBody>
       <ContactBand />

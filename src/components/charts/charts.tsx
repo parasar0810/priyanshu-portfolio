@@ -1,4 +1,4 @@
-import { byDifficulty, costOfAgents, liveScenarios, mainRun } from "@/content/aegis-data";
+import { byDifficulty, costOfAgents, mainRun } from "@/content/aegis-data";
 import { cx } from "../ui";
 
 /* Shared chart chrome: title, note, and an always-available data table. */
@@ -16,7 +16,7 @@ function ChartFrame({
   children: React.ReactNode;
 }) {
   return (
-    <figure className="not-prose rounded-2xl border border-line bg-surface p-5 shadow-soft sm:p-6">
+    <figure className="not-prose rounded-lg border border-line bg-surface p-5 shadow-soft sm:p-6">
       <figcaption>
         <p className="text-[0.95rem] font-semibold text-ink">{title}</p>
         {note && <p className="mt-1 text-sm leading-relaxed text-muted">{note}</p>}
@@ -210,73 +210,42 @@ export function DifficultyTable() {
   );
 }
 
-const SERIES = [
-  { key: "detect", label: "Detection", cls: "bg-series-2" },
-  { key: "investigate", label: "Investigation", cls: "bg-series-1" },
-  { key: "recover", label: "Recovery (incl. 45 s settle)", cls: "bg-series-3" },
-] as const;
-
-/** Live AWS runs: where the time goes from fault to verified recovery. */
-export function ScenarioTimingChart() {
-  const max = 140;
+/**
+ * Before/after pairs from AegisBench. Each pair states its sample and caveat,
+ * because none of these differences is statistically significant.
+ */
+export function BeforeAfter({
+  items,
+}: {
+  items: { metric: string; before: number; after: number; unit?: "%"; lowerIsBetter?: boolean; note: string }[];
+}) {
+  const fmt = (v: number, u?: string) => (u === "%" ? `${Math.round(v * 100)}%` : String(v));
   return (
-    <ChartFrame
-      title="Fault to verified recovery, live on AWS"
-      note="One run per scenario — a demonstration, not a statistic. Human approval time is excluded; recovery includes a deliberate 45-second settle before re-measuring."
-      legend={
-        <ul className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Legend">
-          {SERIES.map((s) => (
-            <li key={s.key} className="flex items-center gap-2 text-xs text-ink-2">
-              <span className={cx("h-2.5 w-2.5 rounded-sm", s.cls)} aria-hidden="true" />
-              {s.label}
-            </li>
-          ))}
-        </ul>
-      }
-      table={
-        <DataTable
-          head={["Scenario", "Detection (s)", "Investigation (s)", "Recovery (s)", "Fix", "Attribution"]}
-          rows={liveScenarios.map((s) => [`${s.id} · ${s.name}`, s.detect, s.investigate, s.recover, s.fix, s.attribution])}
-        />
-      }
-    >
-      <ol className="space-y-2.5">
-        {liveScenarios.map((s) => {
-          const total = s.detect + s.investigate + s.recover;
-          return (
-            <li key={s.id} className="grid grid-cols-[1.5rem_1fr] items-center gap-3 sm:grid-cols-[13rem_1fr_3.5rem]">
-              <span className="font-mono text-xs text-muted sm:hidden">{s.id}</span>
-              <span className="hidden truncate text-sm text-ink-2 sm:block">
-                <span className="mr-2 font-mono text-xs text-muted">{s.id}</span>
-                {s.name}
-              </span>
-              <div
-                className="flex h-5 gap-[2px]"
-                role="img"
-                aria-label={`${s.id}, ${s.name}: detection ${s.detect} s, investigation ${s.investigate} s, recovery ${s.recover} s.`}
-              >
-                {SERIES.map((ser, i) => {
-                  const v = s[ser.key];
-                  return (
-                    <span
-                      key={ser.key}
-                      title={`${ser.label}: ${v} s`}
-                      className={cx(
-                        "h-full transition-opacity hover:opacity-80",
-                        ser.cls,
-                        i === 0 && "rounded-l-[4px]",
-                        i === SERIES.length - 1 && "rounded-r-[4px]",
-                      )}
-                      style={{ width: `${(v / max) * 100}%` }}
-                    />
-                  );
-                })}
-              </div>
-              <span className="hidden text-right font-mono text-xs tabular-nums text-muted sm:block">{Math.round(total)} s</span>
-            </li>
-          );
-        })}
-      </ol>
-    </ChartFrame>
+    <ul className="not-prose grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
+      {items.map((it) => {
+        const max = Math.max(it.before, it.after) || 1;
+        return (
+          <li key={it.metric} className="bg-surface p-5">
+            <p className="text-sm font-semibold text-ink">{it.metric}</p>
+            <div className="mt-3 space-y-2" aria-hidden="true">
+              {[
+                { l: "Before", v: it.before, c: "bg-line-strong" },
+                { l: "After", v: it.after, c: "bg-accent" },
+              ].map((b) => (
+                <div key={b.l} className="grid grid-cols-[3.25rem_1fr_3rem] items-center gap-2 text-xs">
+                  <span className="text-muted">{b.l}</span>
+                  <span className="h-2 rounded-full bg-subtle">
+                    <span className={`block h-2 rounded-full ${b.c}`} style={{ width: `${Math.max((b.v / max) * 100, 2)}%` }} />
+                  </span>
+                  <span className="text-right font-mono tabular-nums text-ink">{fmt(b.v, it.unit)}</span>
+                </div>
+              ))}
+            </div>
+            <p className="sr-only">{`${it.metric}: before ${fmt(it.before, it.unit)}, after ${fmt(it.after, it.unit)}.`}</p>
+            <p className="mt-3 text-xs leading-relaxed text-muted">{it.note}</p>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

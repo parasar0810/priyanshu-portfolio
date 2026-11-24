@@ -33,7 +33,7 @@ export default function ContactPage() {
               </>
             );
             const cls =
-              "group block h-full rounded-2xl border border-line bg-surface p-6 shadow-soft transition-shadow hover:shadow-lift";
+              "group block h-full rounded-lg border border-line bg-surface p-6 shadow-soft transition-shadow hover:shadow-lift";
             return (
               <li key={c.label}>
                 {c.external ? (

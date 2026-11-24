@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { DiagramDefs } from "@/components/diagrams";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -11,7 +12,7 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Backend & applied-AI engineer`,
+    default: `${site.name} — Software Engineer, Backend Systems & Applied AI`,
     template: `%s · ${site.name}`,
   },
   description: site.description,
@@ -33,12 +34,12 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "/",
     siteName: site.name,
-    title: `${site.name} — Backend & applied-AI engineer`,
+    title: `${site.name} — Software Engineer, Backend Systems & Applied AI`,
     description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Backend & applied-AI engineer`,
+    title: `${site.name} — Software Engineer, Backend Systems & Applied AI`,
     description: site.description,
   },
   robots: { index: true, follow: true },
@@ -54,8 +55,12 @@ const personJsonLd = {
   "@type": "Person",
   name: site.name,
   url: site.url,
-  jobTitle: "Software Engineering Student",
+  jobTitle: "Software Engineer — Backend Systems & Applied AI",
+  description: site.description,
+  email: `mailto:${site.email}`,
+  address: { "@type": "PostalAddress", addressLocality: "Gurugram", addressRegion: "Haryana", addressCountry: "IN" },
   alumniOf: { "@type": "CollegeOrUniversity", name: "BML Munjal University" },
+  knowsAbout: ["Backend engineering", "Applied AI", "Multi-agent systems", "Incident response", "Vector search", "Observability"],
   sameAs: [site.github, site.linkedin],
 };
 
@@ -74,6 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <DiagramDefs />
         <script
           type="application/ld+json"
           // Static, author-controlled JSON — no user input reaches this.

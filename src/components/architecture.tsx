@@ -57,7 +57,7 @@ const kindStyle: Record<NonNullable<Node["kind"]>, string> = {
 
 export function ArchitectureDiagram() {
   return (
-    <figure className="not-prose rounded-2xl border border-line bg-subtle/60 p-4 sm:p-6">
+    <figure className="not-prose rounded-lg border border-line bg-subtle/60 p-4 sm:p-6">
       <ol className="grid gap-3 lg:grid-cols-5" aria-label="AegisOps pipeline, five stages">
         {stages.map((s, i) => (
           <li key={s.step} className="relative flex flex-col">

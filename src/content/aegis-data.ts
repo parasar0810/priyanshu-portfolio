@@ -28,15 +28,17 @@ export const byDifficulty = [
 
 /** AEGISOPS_FINAL_TEST_REPORT.md §3 — one live run per scenario on AWS. Seconds. */
 export const liveScenarios = [
-  { id: "A", name: "Checkout HTTP 500", detect: 60.0, investigate: 22.1, recover: 48.9, fix: "rollback_feature_flag", attribution: "attributed" },
-  { id: "B", name: "DB pool exhaustion", detect: 24.4, investigate: 32.2, recover: 49.2, fix: "reset_db_pool", attribution: "attributed" },
-  { id: "C", name: "Slow recommendations", detect: 51.5, investigate: 25.6, recover: 49.1, fix: "disable_recommendations", attribution: "attributed" },
-  { id: "D", name: "CPU saturation", detect: 47.2, investigate: 23.3, recover: 49.9, fix: "stop_background_jobs", attribution: "attributed" },
-  { id: "E", name: "Memory pressure", detect: 26.1, investigate: 15.8, recover: 48.9, fix: "release_memory", attribution: "attributed" },
-  { id: "F", name: "API unavailable", detect: 41.2, investigate: 15.7, recover: 48.6, fix: "restart_service", attribution: "unknown" },
-  { id: "G", name: "DB lock, misleading alert", detect: 45.6, investigate: 26.0, recover: 52.2, fix: "cancel_blocking_query", attribution: "attributed" },
-  { id: "H", name: "CPU-starved API", detect: 44.4, investigate: 26.4, recover: 48.9, fix: "stop_background_jobs", attribution: "attributed" },
+  { id: "A", name: "Checkout HTTP 500", alert: "5xx rate", impact: "POST /api/checkout → 500", diagnosis: "bad_deployment · novacart-api", conf: 0.95, detect: 60.0, investigate: 22.1, recover: 48.9, fix: "rollback_feature_flag", after: "checkout → 201", attribution: "attributed" },
+  { id: "B", name: "DB pool exhaustion", alert: "Pool exhausted", impact: "GET /api/products → 503 in 2.0 s", diagnosis: "database_failure · novacart-db", conf: 0.9, detect: 24.4, investigate: 32.2, recover: 49.2, fix: "reset_db_pool", after: "→ 200 in 0.01 s", attribution: "attributed" },
+  { id: "C", name: "Slow recommendations", alert: "p95 latency", impact: "product page 2.62 s", diagnosis: "high_latency · novacart-recs", conf: 0.98, detect: 51.5, investigate: 25.6, recover: 49.1, fix: "disable_recommendations", after: "→ 0.02 s", attribution: "attributed" },
+  { id: "D", name: "CPU saturation", alert: "CPU", impact: "product page 1.0 s", diagnosis: "cpu_saturation · novacart-api", conf: 0.85, detect: 47.2, investigate: 23.3, recover: 49.9, fix: "stop_background_jobs", after: "→ 0.02 s", attribution: "attributed" },
+  { id: "E", name: "Memory pressure", alert: "Memory", impact: "memory at 90% of limit", diagnosis: "memory_exhaustion · novacart-api", conf: 0.85, detect: 26.1, investigate: 15.8, recover: 48.9, fix: "release_memory", after: "memory 16%", attribution: "attributed" },
+  { id: "F", name: "API unavailable", alert: "API down", impact: "connection refused", diagnosis: "service_unavailable · novacart-api", conf: 0.85, detect: 41.2, investigate: 15.7, recover: 48.6, fix: "restart_service", after: "→ 200", attribution: "unknown" },
+  { id: "G", name: "DB lock, misleading alert", alert: "5xx rate on novacart-api", impact: "product page 503 in 3.5 s", diagnosis: "database_failure · novacart-db", conf: 0.95, detect: 45.6, investigate: 26.0, recover: 52.2, fix: "cancel_blocking_query", after: "→ 0.02 s", attribution: "attributed" },
+  { id: "H", name: "CPU-starved API", alert: "CPU", impact: "product page 1.75 s", diagnosis: "cpu_saturation · novacart-api", conf: 0.8, detect: 44.4, investigate: 26.4, recover: 48.9, fix: "stop_background_jobs", after: "→ 0.02 s", attribution: "attributed" },
 ] as const;
+
+export type LiveScenario = (typeof liveScenarios)[number];
 
 /** AEGISBENCH_RESULTS.md §9 — runs 9d87 (fixed) vs f067 (interactive), 7 hard scenarios × 2, paired. */
 export const acquisition = {

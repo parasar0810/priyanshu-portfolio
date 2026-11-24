@@ -39,9 +39,10 @@ export default function AboutPage() {
             <p>
               My own projects follow the same thread. <Link href="/projects/aegisops">AegisOps</Link> asks how an AI
               system can help during a production incident without being trusted blindly.{" "}
+              <Link href="/projects/live-meeting-copilot">Live Meeting Copilot</Link> runs four AI agents concurrently over a streaming transcript without letting a slow client stall the rest.{" "}
               <Link href="/projects/upi-offline-mesh">UPI Offline Mesh</Link> is about getting exactly-once settlement
               out of an unreliable, adversarial delivery path. <Link href="/projects/own-ai">OWN-AI</Link> rebuilds
-              vector search from the index structures up.
+              vector search in C++ from the index structures up.
             </p>
 
             <h2>How I approach engineering</h2>
@@ -68,7 +69,7 @@ export default function AboutPage() {
           </div>
 
           <aside aria-label="Quick facts" className="lg:pt-1">
-            <dl className="rounded-2xl border border-line bg-surface p-6 shadow-soft">
+            <dl className="rounded-lg border border-line bg-surface p-6 shadow-soft">
               {facts.map((f) => (
                 <div key={f.k} className="border-b border-line py-3 first:pt-0 last:border-0 last:pb-0">
                   <dt className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">{f.k}</dt>

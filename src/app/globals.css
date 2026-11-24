@@ -10,7 +10,7 @@
   --color-subtle: #f1f5f9;
   --color-ink: #0f172a;
   --color-ink-2: #334155;
-  --color-muted: #64748b;
+  --color-muted: #5b6a80; /* #64748b nudged darker for AA on tinted panels */
   --color-line: #e2e8f0;
   --color-line-strong: #cbd5e1;
   --color-accent: #0d9488;

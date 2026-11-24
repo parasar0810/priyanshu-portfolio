@@ -4,13 +4,14 @@ import { Container, ExternalLink } from "./ui";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-line bg-surface">
-      <Container className="grid gap-10 py-12 sm:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="border-t border-line bg-canvas">
+      <Container className="grid gap-8 py-10 sm:grid-cols-[1.6fr_1fr_1fr]">
         <div>
           <p className="font-semibold text-ink">{site.name}</p>
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted">
-            Backend systems and applied AI. {site.education}.
+            {site.designation}. {site.education}.
           </p>
+          <p className="mt-2 text-sm text-ink-2">{site.location}</p>
         </div>
         <nav aria-label="Footer">
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.12em] text-muted">Site</p>

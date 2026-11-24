@@ -34,8 +34,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/80 bg-canvas/85 backdrop-blur-md supports-[backdrop-filter]:bg-canvas/75">
-      <div className="mx-auto flex h-16 w-full max-w-[1120px] items-center justify-between px-5 sm:px-8">
-        <Link href="/" className="group flex items-center gap-2.5" aria-label={`${site.name}, home`}>
+      <div className="mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between px-5 sm:px-8">
+        <Link href="/" className="group flex items-center gap-2.5">
           <span
             aria-hidden="true"
             className="grid h-7 w-7 place-items-center rounded-md bg-ink font-mono text-[0.7rem] font-semibold text-white"
@@ -94,7 +94,7 @@ export function SiteHeader() {
         hidden={!open}
         className="border-t border-line bg-canvas md:hidden"
       >
-        <ul className="mx-auto max-w-[1120px] px-5 py-3">
+        <ul className="mx-auto max-w-[1200px] px-5 py-3">
           {[...nav, { href: "/resume", label: "Résumé" }].map((item) => (
             <li key={item.href}>
               <Link
