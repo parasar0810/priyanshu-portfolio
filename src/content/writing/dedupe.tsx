@@ -31,20 +31,27 @@ export default function Dedupe() {
         </li>
       </ul>
 
-      <h2>Claim first, then work</h2>
+      <h2>Claim first, then work — in the same transaction</h2>
       <p>
-        So the very first step on the ingest path is <code>SHA-256(ciphertext)</code>, followed by an atomic claim:
+        So the very first step on the ingest path is <code>SHA-256(ciphertext)</code>, followed by an atomic claim in
+        PostgreSQL:
       </p>
       <pre>
-        <code>{`Instant prev = seen.putIfAbsent(packetHash, now);
-return prev == null;  // true = first claimer, false = duplicate`}</code>
+        <code>{`INSERT INTO processed_packets (packet_hash, ...)
+VALUES ($1, ...)
+ON CONFLICT (packet_hash) DO NOTHING
+RETURNING packet_hash;   -- a row back = first claimer; none = duplicate`}</code>
       </pre>
       <p>
-        <code>ConcurrentHashMap.putIfAbsent</code> is atomic, so exactly one caller wins no matter how many arrive
-        together. Only the winner decrypts, checks freshness and settles; the rest return{" "}
-        <code>DUPLICATE_DROPPED</code>. In production the map would be Redis <code>SET key NX EX</code> — same
-        semantics, shared across replicas — and a unique index on <code>transactions.packet_hash</code> backs it up
-        if the cache layer ever fails.
+        Exactly one concurrent caller gets a row back. Only the winner decrypts, verifies the sender’s signature, checks
+        freshness and settles; the rest return <code>DUPLICATE_DROPPED</code>.
+      </p>
+      <p>
+        The important detail is <em>where</em> the claim lives. My first version (Java) claimed the hash in an
+        in-memory <code>ConcurrentHashMap</code> and settled afterwards. If settlement then failed, the claim stayed
+        behind and every retry was dropped as a duplicate — a payment lost for good. Putting the claim in the same
+        database transaction as the debit and credit fixes that: a failure rolls back both, and the next delivery
+        settles normally.
       </p>
 
       <h2>Replays are a separate problem</h2>
@@ -57,10 +64,10 @@ return prev == null;  // true = first claimer, false = duplicate`}</code>
 
       <h2>Testing the property, not the path</h2>
       <p>
-        The test I care about fires three threads at the ingest service with the same packet and asserts exactly one{" "}
-        <code>SETTLED</code>, two <code>DUPLICATE_DROPPED</code>, and that the sender’s balance changed by the amount
-        exactly once. A second test flips one byte of ciphertext and checks the result is <code>INVALID</code>, not
-        a crash or a settlement.
+        The test I care about fires 20 concurrent deliveries of the same packet at a real PostgreSQL and asserts exactly
+        one <code>SETTLED</code>, 19 <code>DUPLICATE_DROPPED</code>, and that the sender’s balance changed by the amount
+        exactly once. Others make settlement fail mid-transaction and check the retry succeeds, and flip one byte of
+        ciphertext to check the result is <code>INVALID</code>, not a crash or a settlement.
       </p>
       <Callout title="Honest limits">
         This is mesh-routed <em>deferred</em> settlement, not real-time offline payment. The receiver can’t verify

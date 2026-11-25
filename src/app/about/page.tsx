@@ -42,7 +42,7 @@ export default function AboutPage() {
               <Link href="/projects/live-meeting-copilot">Live Meeting Copilot</Link> runs four AI agents concurrently over a streaming transcript without letting a slow client stall the rest.{" "}
               <Link href="/projects/upi-offline-mesh">UPI Offline Mesh</Link> is about getting exactly-once settlement
               out of an unreliable, adversarial delivery path. <Link href="/projects/own-ai">OWN-AI</Link> rebuilds
-              vector search in C++ from the index structures up.
+              vector search from the index structures up — and measures where each one wins.
             </p>
 
             <h2>How I approach engineering</h2>

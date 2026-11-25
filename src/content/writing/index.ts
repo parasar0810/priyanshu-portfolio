@@ -71,9 +71,9 @@ export const posts: Post[] = [
     slug: "deduplicate-before-you-decrypt",
     title: "Deduplicate before you decrypt",
     description:
-      "In an offline payment mesh, the same packet can reach the server through three phones at once. Hashing the ciphertext — not the packet ID or the plaintext — makes settlement exactly-once.",
+      "In an offline payment mesh, the same packet can reach the server through three phones at once. Hashing the ciphertext — not the packet ID or the plaintext — and claiming it inside the settlement transaction means each packet settles at most once.",
     date: "2026-09-30",
-    readingTime: "4 min",
+    readingTime: "5 min",
     project: "UPI Offline Mesh",
     Body: Dedupe,
   },

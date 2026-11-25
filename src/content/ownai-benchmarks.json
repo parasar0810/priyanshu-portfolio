@@ -1,0 +1,209 @@
+{
+  "generated_at": "2026-11-25T19:16:47+00:00",
+  "method": "Seeded Gaussian clusters (32 centres, sigma 0.35). Recall@k is measured against exact brute-force results. Latency is wall-clock per query, single-threaded Python + NumPy; KD-tree build time includes its lazy first build.",
+  "config": {
+    "seed": 7,
+    "metric": "euclidean",
+    "k": 10,
+    "ef_search": 50,
+    "hnsw": {
+      "M": 16,
+      "ef_construction": 200
+    },
+    "kdtree_leaf_size": 16
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "processor": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "python": "3.12.4",
+    "numpy": "2.5.5"
+  },
+  "runs": [
+    {
+      "n": 1000,
+      "dims": 16,
+      "queries": 200,
+      "k": 10,
+      "metric": "euclidean",
+      "ef_search": 50,
+      "indexes": {
+        "bruteforce": {
+          "build_s": 0.0002,
+          "query_ms_median": 0.0666,
+          "query_ms_p95": 0.1622,
+          "qps": 11723.8,
+          "recall_at_k": 1.0
+        },
+        "kdtree": {
+          "build_s": 0.0021,
+          "query_ms_median": 0.4136,
+          "query_ms_p95": 0.6391,
+          "qps": 2441.9,
+          "recall_at_k": 1.0
+        },
+        "hnsw": {
+          "build_s": 31.7407,
+          "query_ms_median": 2.4298,
+          "query_ms_p95": 6.1048,
+          "qps": 324.5,
+          "recall_at_k": 1.0
+        }
+      }
+    },
+    {
+      "n": 5000,
+      "dims": 16,
+      "queries": 200,
+      "k": 10,
+      "metric": "euclidean",
+      "ef_search": 50,
+      "indexes": {
+        "bruteforce": {
+          "build_s": 0.0023,
+          "query_ms_median": 1.2926,
+          "query_ms_p95": 1.9824,
+          "qps": 699.5,
+          "recall_at_k": 1.0
+        },
+        "kdtree": {
+          "build_s": 0.0329,
+          "query_ms_median": 4.0647,
+          "query_ms_p95": 8.4371,
+          "qps": 230.2,
+          "recall_at_k": 1.0
+        },
+        "hnsw": {
+          "build_s": 187.8585,
+          "query_ms_median": 1.3931,
+          "query_ms_p95": 2.346,
+          "qps": 692.3,
+          "recall_at_k": 1.0
+        }
+      }
+    },
+    {
+      "n": 10000,
+      "dims": 16,
+      "queries": 200,
+      "k": 10,
+      "metric": "euclidean",
+      "ef_search": 50,
+      "indexes": {
+        "bruteforce": {
+          "build_s": 0.0035,
+          "query_ms_median": 1.9449,
+          "query_ms_p95": 2.7854,
+          "qps": 483.2,
+          "recall_at_k": 1.0
+        },
+        "kdtree": {
+          "build_s": 0.0616,
+          "query_ms_median": 5.7207,
+          "query_ms_p95": 13.1027,
+          "qps": 153.6,
+          "recall_at_k": 1.0
+        },
+        "hnsw": {
+          "build_s": 436.3519,
+          "query_ms_median": 0.8425,
+          "query_ms_p95": 2.5715,
+          "qps": 914.0,
+          "recall_at_k": 1.0
+        }
+      }
+    },
+    {
+      "n": 2000,
+      "dims": 128,
+      "queries": 200,
+      "k": 10,
+      "metric": "euclidean",
+      "ef_search": 50,
+      "indexes": {
+        "bruteforce": {
+          "build_s": 0.0005,
+          "query_ms_median": 1.7291,
+          "query_ms_p95": 3.8297,
+          "qps": 495.9,
+          "recall_at_k": 1.0
+        },
+        "kdtree": {
+          "build_s": 0.0158,
+          "query_ms_median": 1.6735,
+          "query_ms_p95": 4.3692,
+          "qps": 451.2,
+          "recall_at_k": 1.0
+        },
+        "hnsw": {
+          "build_s": 96.8585,
+          "query_ms_median": 1.2722,
+          "query_ms_p95": 1.9865,
+          "qps": 734.5,
+          "recall_at_k": 1.0
+        }
+      }
+    },
+    {
+      "n": 5000,
+      "dims": 128,
+      "queries": 200,
+      "k": 10,
+      "metric": "euclidean",
+      "ef_search": 50,
+      "indexes": {
+        "bruteforce": {
+          "build_s": 0.0018,
+          "query_ms_median": 5.5654,
+          "query_ms_p95": 7.8773,
+          "qps": 174.0,
+          "recall_at_k": 1.0
+        },
+        "kdtree": {
+          "build_s": 0.1082,
+          "query_ms_median": 13.4213,
+          "query_ms_p95": 19.5718,
+          "qps": 72.7,
+          "recall_at_k": 1.0
+        },
+        "hnsw": {
+          "build_s": 179.3496,
+          "query_ms_median": 0.8647,
+          "query_ms_p95": 4.6108,
+          "qps": 637.0,
+          "recall_at_k": 1.0
+        }
+      }
+    },
+    {
+      "n": 2000,
+      "dims": 768,
+      "queries": 200,
+      "k": 10,
+      "metric": "euclidean",
+      "ef_search": 50,
+      "indexes": {
+        "bruteforce": {
+          "build_s": 0.0008,
+          "query_ms_median": 8.669,
+          "query_ms_p95": 15.8026,
+          "qps": 100.3,
+          "recall_at_k": 1.0
+        },
+        "kdtree": {
+          "build_s": 0.1827,
+          "query_ms_median": 4.2773,
+          "query_ms_p95": 11.0904,
+          "qps": 190.7,
+          "recall_at_k": 1.0
+        },
+        "hnsw": {
+          "build_s": 49.8093,
+          "query_ms_median": 0.6195,
+          "query_ms_p95": 0.8756,
+          "qps": 1539.5,
+          "recall_at_k": 1.0
+        }
+      }
+    }
+  ]
+}

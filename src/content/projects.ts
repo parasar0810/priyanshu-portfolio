@@ -2,7 +2,7 @@
  * Projects. Every fact is traceable to the named repository.
  *  - AegisOps: github.com/parasar0810/Aegisops (README, AEGISBENCH_RESULTS.md, AEGISOPS_FINAL_TEST_REPORT.md, source)
  *  - Live Meeting Copilot: github.com/parasar0810/Live-meeting-transcript (README, DESIGN.md, tests/)
- *  - OWN-AI: github.com/parasar0810/OWN-AI (main.cpp, README)
+ *  - OWN-AI: github.com/parasar0810/OWN-AI (ownai/, tests/, docs/MIGRATION.md, benchmarks/results.json)
  *  - UPI Offline Mesh: github.com/parasar0810/UpiWithoutInternet (README, source, tests)
  *  - FlowGuard / Meterly / AegisPay: their repositories' READMEs and source trees
  */
@@ -95,53 +95,55 @@ export const projects: Project[] = [
   {
     slug: "own-ai",
     name: "OWN-AI",
-    kind: "Vector search · RAG · Systems programming",
-    tagline: "A vector database written from scratch, with HNSW, KD-tree and brute-force search side by side.",
+    kind: "Vector search · RAG · Algorithms",
+    tagline: "A vector database from first principles: brute force, KD-tree and HNSW, measured side by side.",
     problem:
       "Vector databases are usually used as black boxes. Building the index structures directly makes their trade-offs visible and measurable.",
     summary:
-      "A C++ server implementing HNSW, a KD-tree and brute-force k-NN under cosine, Euclidean and Manhattan distance, plus a RAG pipeline that chunks documents, embeds them locally with Ollama and answers questions over the retrieved chunks.",
+      "Brute-force, KD-tree and HNSW k-NN written from scratch in Python and NumPy under cosine, euclidean and manhattan distance, with a reproducible recall/latency benchmark, a FastAPI service, a React index explorer and a citation-checked RAG pipeline on local Ollama models.",
     year: "2026",
-    status: "Personal project",
-    stack: ["C++17", "cpp-httplib", "HNSW", "KD-tree", "Ollama", "nomic-embed-text", "llama3.2"],
+    status: "Personal project · C++ original reimplemented in Python (Nov 2026)",
+    stack: ["Python", "NumPy", "FastAPI", "Pydantic", "HNSW", "KD-tree", "Ollama", "React", "pytest"],
     repo: "https://github.com/parasar0810/OWN-AI",
     thumb: "ownai",
+    cover: { src: "/images/ownai/explorer.png", alt: "OWN-AI index explorer showing real HNSW links and KD-tree splits.", width: 1440, height: 1169 },
     facts: [
+      { label: "HNSW recall@10 after heuristic fix", value: "0.93 → 1.00" },
       { label: "Index types", value: "HNSW · KD-tree · brute force" },
-      { label: "Distance metrics", value: "Cosine · Euclidean · Manhattan" },
-      { label: "Document embeddings", value: "768-D (nomic-embed-text)" },
+      { label: "Automated tests", value: "63 passing" },
     ],
     features: [
-      "Three k-NN algorithms behind one interface, timed per query",
-      "HNSW with M = 16, ef_construction = 200",
-      "250-word chunks with 30-word overlap for RAG",
-      "REST API for insert, delete, search, benchmark and graph stats",
+      "Found and fixed HNSW graph fragmentation (73/600 → 600/600 reachable)",
+      "Exact KD-tree for every metric, including cosine",
+      "Seeded benchmark: latency and recall@10 against brute force",
+      "RAG answers must cite passages or refuse",
     ],
   },
   {
     slug: "upi-offline-mesh",
     name: "UPI Offline Mesh",
-    kind: "Distributed systems · Cryptography · Idempotency",
-    tagline: "Encrypted payments that hop between untrusted phones and settle exactly once.",
+    kind: "Distributed systems · Cryptography · PostgreSQL",
+    tagline: "An offline payment network simulation: signed, encrypted payments that settle exactly once.",
     problem:
-      "When a payment travels through a gossip mesh, the server will receive the same packet several times — sometimes simultaneously — and through intermediaries it can’t trust.",
+      "When a payment travels through a gossip mesh, the server receives the same packet several times — sometimes simultaneously — through intermediaries it can’t trust.",
     summary:
-      "A Spring Boot backend and mesh simulator. Packets travel under hybrid RSA-OAEP + AES-GCM encryption; the server deduplicates on the ciphertext hash before decrypting, rejects tampered or replayed packets, and settles in one transaction.",
+      "A Node.js, Express and PostgreSQL simulation. Phones gossip encrypted, Ed25519-signed payments; bridges upload concurrently; the backend claims each packet hash and settles inside one transaction, so duplicates, tampering, forgery and replays are rejected.",
     year: "2026",
-    status: "Teaching demo · server side + simulator",
-    stack: ["Java 17", "Spring Boot 3", "Spring Data JPA", "H2", "RSA-OAEP", "AES-256-GCM", "JUnit"],
+    status: "Simulation · Java original reimplemented in Node.js (Nov 2026)",
+    stack: ["Node.js", "Express", "PostgreSQL", "node:crypto", "AES-256-GCM", "RSA-OAEP", "Ed25519", "React"],
     repo: "https://github.com/parasar0810/UpiWithoutInternet",
     thumb: "upi",
+    cover: { src: "/images/upi/console.png", alt: "UPI Offline Mesh simulation console with mesh map, payment form and balances.", width: 1440, height: 1250 },
     facts: [
-      { label: "Settlement guarantee", value: "Exactly once" },
-      { label: "Concurrency test", value: "3 bridges, 1 packet" },
-      { label: "Replay window", value: "24 h freshness" },
+      { label: "Concurrent duplicate deliveries", value: "20 → 1 settlement" },
+      { label: "Tests (real PostgreSQL)", value: "34 passing" },
+      { label: "Sender authentication", value: "Ed25519" },
     ],
     features: [
-      "Atomic claim on SHA-256(ciphertext) before any decryption",
-      "GCM tag rejects any flipped bit",
-      "Signed timestamp + nonce defeat replays",
-      "Unique index on packet hash as defence in depth",
+      "Claim + settle in one PostgreSQL transaction",
+      "Ed25519 signatures authenticate the sender",
+      "Deadlock-free locking for opposite transfers",
+      "Interactive mesh map and failure lab",
     ],
   },
 ];

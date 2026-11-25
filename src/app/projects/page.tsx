@@ -8,7 +8,7 @@ import { projects } from "@/content/projects";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Technical case studies: AegisOps (multi-agent incident response), Live Meeting Copilot (real-time agents), OWN-AI (vector database in C++), UPI Offline Mesh, plus FlowGuard, Meterly and AegisPay.",
+    "Technical case studies: AegisOps (multi-agent incident response), Live Meeting Copilot (real-time agents), OWN-AI (vector database from first principles), UPI Offline Mesh, plus FlowGuard, Meterly and AegisPay.",
   alternates: { canonical: "/projects" },
 };
 
