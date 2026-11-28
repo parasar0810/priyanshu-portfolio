@@ -20,6 +20,7 @@ export type Project = {
   stack: string[];
   repo?: string;
   demo?: { label: string; href: string; note?: string }[];
+  demoNote?: string;
   thumb: Thumb;
   cover?: { src: string; alt: string; width: number; height: number };
   facts: { label: string; value: string }[];
@@ -45,6 +46,7 @@ export const projects: Project[] = [
       { label: "NovaCart demo store", href: "https://novacart.13-205-64-4.sslip.io", note: "The monitored application" },
       { label: "AegisOps console", href: "https://13-205-64-4.sslip.io", note: "Sign-in required" },
     ],
+    demoNote: "The demo runs on a single EC2 instance and may be stopped to control cost.",
     thumb: "aegisops",
     cover: {
       src: "/images/aegisops/01_dashboard.png",
@@ -105,6 +107,8 @@ export const projects: Project[] = [
     status: "Personal project · Python, 2026",
     stack: ["Python", "NumPy", "FastAPI", "Pydantic", "HNSW", "KD-tree", "Ollama", "React", "pytest"],
     repo: "https://github.com/parasar0810/OWN-AI",
+    demo: [{ label: "Live demo", href: "https://own-ai-jka3.onrender.com", note: "Search playground, index explorer, benchmarks" }],
+    demoNote: "Free hosting: the first visit after idle takes up to a minute to wake. The RAG assistant needs a local Ollama and is disabled online.",
     thumb: "ownai",
     cover: { src: "/images/ownai/explorer.png", alt: "OWN-AI index explorer showing real HNSW links and KD-tree splits.", width: 1440, height: 1169 },
     facts: [
@@ -132,6 +136,8 @@ export const projects: Project[] = [
     status: "Simulation · Java original reimplemented in Node.js (Nov 2026)",
     stack: ["Node.js", "Express", "PostgreSQL", "node:crypto", "AES-256-GCM", "RSA-OAEP", "Ed25519", "React"],
     repo: "https://github.com/parasar0810/UpiWithoutInternet",
+    demo: [{ label: "Live simulation", href: "https://upi-offline-mesh-0r6x.onrender.com", note: "Node.js + PostgreSQL (Neon)" }],
+    demoNote: "Free hosting: the first visit after idle takes up to a minute to wake. The demo is shared by all visitors and resets when the server restarts; no real money is involved.",
     thumb: "upi",
     cover: { src: "/images/upi/console.png", alt: "UPI Offline Mesh simulation console with mesh map, payment form and balances.", width: 1440, height: 1250 },
     facts: [

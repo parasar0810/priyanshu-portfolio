@@ -132,7 +132,7 @@ export default function UpiCaseStudy() {
             <li><strong>Deferred settlement, not real-time offline payment.</strong> The receiver can’t verify funds offline; a sender can double-spend across disconnected groups until one packet reaches the backend. Real offline UPI uses a pre-funded hardware wallet for this reason.</li>
             <li>Device keys live in the simulator’s memory; the server’s RSA key regenerates on start (production: secure enclave, KMS/HSM).</li>
             <li>Bridges aren’t authenticated (production: mutual TLS and per-bridge rate limits).</li>
-            <li>Not deployed publicly yet; runs locally with {code("docker compose up")}.</li>
+            <li>The live demo is a single shared simulation: visitors acting at the same moment see each other’s changes. It runs on free hosting (Render + Neon PostgreSQL) and resets on restart.</li>
           </ul>
         </Measure>
       </CaseStudyBody>

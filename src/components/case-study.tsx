@@ -45,10 +45,8 @@ export function CaseStudyHeader({ project, children }: { project: Project; child
                 </li>
               ))}
             </ul>
-            {project.demo && (
-              <p className="mt-4 border-t border-line pt-3 text-xs leading-relaxed text-muted">
-                The demo runs on a single EC2 instance and may be stopped to control cost.
-              </p>
+            {project.demoNote && (
+              <p className="mt-4 border-t border-line pt-3 text-xs leading-relaxed text-muted">{project.demoNote}</p>
             )}
           </aside>
         </div>

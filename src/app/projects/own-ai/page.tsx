@@ -145,7 +145,7 @@ export default function OwnAiPage() {
             <li>In-memory only: no persistence, no concurrency control beyond a single process.</li>
             <li>HNSW deletes unlink nodes without repairing the graph; many deletes call for a rebuild.</li>
             <li>The 16-dimensional demo collection uses a hand-built keyword encoder for visualisation — it is not semantic.</li>
-            <li>Not deployed publicly yet; runs locally or with Docker.</li>
+            <li>The live demo runs on a free instance without enough memory for a local LLM, so online RAG is disabled; search, the explorer and benchmarks are fully live.</li>
           </ul>
         </Measure>
       </CaseStudyBody>
