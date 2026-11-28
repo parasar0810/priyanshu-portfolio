@@ -116,7 +116,7 @@ export default function UpiCaseStudy() {
           ]}
         />
         <Measure>
-          <p>34 {code("node:test")} cases run against a real PostgreSQL 16: stable across repeated runs, and in GitHub Actions with a PostgreSQL service container.</p>
+          <p>38 {code("node:test")} cases (including per-visitor isolation) run against a real PostgreSQL 16: stable across repeated runs, and in GitHub Actions with a PostgreSQL service container.</p>
 
           <h2 id="migration">From Java to Node.js</h2>
           <p>
@@ -132,7 +132,7 @@ export default function UpiCaseStudy() {
             <li><strong>Deferred settlement, not real-time offline payment.</strong> The receiver can’t verify funds offline; a sender can double-spend across disconnected groups until one packet reaches the backend. Real offline UPI uses a pre-funded hardware wallet for this reason.</li>
             <li>Device keys live in the simulator’s memory; the server’s RSA key regenerates on start (production: secure enclave, KMS/HSM).</li>
             <li>Bridges aren’t authenticated (production: mutual TLS and per-bridge rate limits).</li>
-            <li>The live demo is a single shared simulation: visitors acting at the same moment see each other’s changes. It runs on free hosting (Render + Neon PostgreSQL) and resets on restart.</li>
+            <li>The live demo gives every visitor a private sandbox (own phones, keys, accounts and ledger, keyed by an HttpOnly cookie). Sandboxes live in one server process, so a restart clears them; it runs on free hosting (Render + Neon PostgreSQL).</li>
           </ul>
         </Measure>
       </CaseStudyBody>

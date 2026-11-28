@@ -137,12 +137,12 @@ export const projects: Project[] = [
     stack: ["Node.js", "Express", "PostgreSQL", "node:crypto", "AES-256-GCM", "RSA-OAEP", "Ed25519", "React"],
     repo: "https://github.com/parasar0810/UpiWithoutInternet",
     demo: [{ label: "Live simulation", href: "https://upi-offline-mesh-0r6x.onrender.com", note: "Node.js + PostgreSQL (Neon)" }],
-    demoNote: "Free hosting: the first visit after idle takes up to a minute to wake. The demo is shared by all visitors and resets when the server restarts; no real money is involved.",
+    demoNote: "Free hosting: the first visit after idle takes up to a minute to wake. Each visitor gets a private sandbox, cleared after 30 minutes idle or on restart; no real money is involved.",
     thumb: "upi",
     cover: { src: "/images/upi/console.png", alt: "UPI Offline Mesh simulation console with mesh map, payment form and balances.", width: 1440, height: 1250 },
     facts: [
       { label: "Concurrent duplicate deliveries", value: "20 → 1 settlement" },
-      { label: "Tests (real PostgreSQL)", value: "34 passing" },
+      { label: "Tests (real PostgreSQL)", value: "38 passing" },
       { label: "Sender authentication", value: "Ed25519" },
     ],
     features: [
