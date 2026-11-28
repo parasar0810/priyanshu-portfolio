@@ -138,14 +138,14 @@ export default function OwnAiPage() {
             grounded. Inputs are validated with Pydantic and model calls are rate-limited. Each fix is listed with its test in{" "}
             {code("docs/ENGINEERING_NOTES.md")}; the project was built with AI pair-programming assistance.
           </p>
-          <p>68 pytest cases pass with a local Ollama (66, with 2 skipped, in CI, which has no model), plus ruff and a benchmark smoke run.</p>
+          <p>80 pytest cases, including real end-to-end tests against Ollama and Gemini that run when those are available (CI has neither), plus ruff and a benchmark smoke run.</p>
 
           <h2 id="limits">Honest limits</h2>
           <ul>
             <li>In-memory only: no persistence, no concurrency control beyond a single process.</li>
             <li>HNSW deletes unlink nodes without repairing the graph; many deletes call for a rebuild.</li>
             <li>The 16-dimensional demo collection uses a hand-built keyword encoder for visualisation — it is not semantic.</li>
-            <li>The live demo runs on a free instance without enough memory for a local LLM, so online RAG is disabled; search, the explorer and benchmarks are fully live.</li>
+            <li>The live demo’s free instance can’t run a local model, so online RAG uses Google Gemini (free tier) behind the same interface. Each visitor’s documents are private, and model calls are rate-limited per visitor and in total.</li>
           </ul>
         </Measure>
       </CaseStudyBody>

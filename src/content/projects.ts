@@ -107,14 +107,14 @@ export const projects: Project[] = [
     status: "Personal project · Python, 2026",
     stack: ["Python", "NumPy", "FastAPI", "Pydantic", "HNSW", "KD-tree", "Ollama", "React", "pytest"],
     repo: "https://github.com/parasar0810/OWN-AI",
-    demo: [{ label: "Live demo", href: "https://own-ai-jka3.onrender.com", note: "Search playground, index explorer, benchmarks" }],
-    demoNote: "Free hosting: the first visit after idle takes up to a minute to wake. The RAG assistant needs a local Ollama and is disabled online.",
+    demo: [{ label: "Live demo", href: "https://own-ai-jka3.onrender.com", note: "Search, index explorer, benchmarks and RAG" }],
+    demoNote: "Free hosting: the first visit after idle takes up to a minute to wake. Online, RAG answers come from Google Gemini (free tier); locally the project uses Ollama. Your documents are private to your session.",
     thumb: "ownai",
     cover: { src: "/images/ownai/explorer.png", alt: "OWN-AI index explorer showing real HNSW links and KD-tree splits.", width: 1440, height: 1169 },
     facts: [
       { label: "HNSW recall@10 after heuristic fix", value: "0.93 → 1.00" },
       { label: "Index types", value: "HNSW · KD-tree · brute force" },
-      { label: "Automated tests", value: "68 passing" },
+      { label: "Automated tests", value: "80 passing" },
     ],
     features: [
       "Found and fixed HNSW graph fragmentation (73/600 → 600/600 reachable)",
