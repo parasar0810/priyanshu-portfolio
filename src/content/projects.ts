@@ -2,7 +2,7 @@
  * Projects. Every fact is traceable to the named repository.
  *  - AegisOps: github.com/parasar0810/Aegisops (README, AEGISBENCH_RESULTS.md, AEGISOPS_FINAL_TEST_REPORT.md, source)
  *  - Live Meeting Copilot: github.com/parasar0810/Live-meeting-transcript (README, DESIGN.md, tests/)
- *  - OWN-AI: github.com/parasar0810/OWN-AI (ownai/, tests/, docs/MIGRATION.md, benchmarks/results.json)
+ *  - OWN-AI: github.com/parasar0810/OWN-AI (ownai/, tests/, docs/ENGINEERING_NOTES.md, benchmarks/results.json)
  *  - UPI Offline Mesh: github.com/parasar0810/UpiWithoutInternet (README, source, tests)
  *  - FlowGuard / Meterly / AegisPay: their repositories' READMEs and source trees
  */
@@ -102,7 +102,7 @@ export const projects: Project[] = [
     summary:
       "Brute-force, KD-tree and HNSW k-NN written from scratch in Python and NumPy under cosine, euclidean and manhattan distance, with a reproducible recall/latency benchmark, a FastAPI service, a React index explorer and a citation-checked RAG pipeline on local Ollama models.",
     year: "2026",
-    status: "Personal project · C++ original reimplemented in Python (Nov 2026)",
+    status: "Personal project · Python, 2026",
     stack: ["Python", "NumPy", "FastAPI", "Pydantic", "HNSW", "KD-tree", "Ollama", "React", "pytest"],
     repo: "https://github.com/parasar0810/OWN-AI",
     thumb: "ownai",
@@ -110,7 +110,7 @@ export const projects: Project[] = [
     facts: [
       { label: "HNSW recall@10 after heuristic fix", value: "0.93 → 1.00" },
       { label: "Index types", value: "HNSW · KD-tree · brute force" },
-      { label: "Automated tests", value: "63 passing" },
+      { label: "Automated tests", value: "68 passing" },
     ],
     features: [
       "Found and fixed HNSW graph fragmentation (73/600 → 600/600 reachable)",

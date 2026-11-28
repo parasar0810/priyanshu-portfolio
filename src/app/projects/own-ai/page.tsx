@@ -22,7 +22,7 @@ const toc = [
   { id: "bug", label: "The HNSW bug" },
   { id: "benchmarks", label: "Benchmarks" },
   { id: "rag", label: "RAG pipeline" },
-  { id: "migration", label: "C++ → Python" },
+  { id: "engineering", label: "Engineering notes" },
   { id: "limits", label: "Honest limits" },
 ];
 
@@ -81,9 +81,9 @@ export default function OwnAiPage() {
         />
 
         <Measure>
-          <h2 id="bug">The HNSW bug the port uncovered</h2>
+          <h2 id="bug">The HNSW bug a reachability test uncovered</h2>
           <p>
-            The original C++ version connected each new node to its M closest candidates. Writing a test that measured
+            The first HNSW version connected each new node to its M closest candidates. Writing a test that measured
             layer-0 reachability on clustered data showed why recall was stuck: only <strong>73 of 600</strong> nodes could be
             reached from the entry point, and recall@10 stayed at <strong>0.93</strong> whatever {code("ef")} was set to. Every
             link pointed inside its own cluster, so the graph split into islands.
@@ -91,7 +91,7 @@ export default function OwnAiPage() {
           <p>
             Implementing the neighbour-selection heuristic from Malkov &amp; Yashunin (keep a candidate only if it is closer to
             the new node than to any neighbour already kept) preserves the long links between clusters. On the same data:{" "}
-            <strong>600/600</strong> reachable, recall@10 <strong>1.00</strong>. The old behaviour is still available as{" "}
+            <strong>600/600</strong> reachable, recall@10 <strong>1.00</strong>. The simple rule is still available as{" "}
             {code("heuristic=False")} and a regression test checks both.
           </p>
         </Measure>
@@ -124,20 +124,21 @@ export default function OwnAiPage() {
             <li>Retrieval keeps only passages within a cosine distance of 0.7.</li>
             <li>The prompt requires {code("[n]")} citations; with nothing relevant the system refuses instead of guessing, and uncited answers are flagged.</li>
           </ul>
-          <Callout title="Verified offline only">
-            The RAG pipeline is tested against a fake Ollama client; the real-model test exists but is skipped unless a local
-            Ollama is running, so no answer-quality numbers are claimed.
+          <Callout title="Verified with real local models">
+            With Ollama on a CPU-only laptop, {code("nomic-embed-text")} produced 768-dimensional embeddings and{" "}
+            {code("llama3.2")} (3B) answered with a correct citation in 2–3 s once loaded; an off-topic question was refused.
+            Testing with the smaller {code("llama3.2:1b")} exposed a bug — a reply of only citations counted as grounded — now
+            fixed. Citation checks confirm which passage is referenced, not that the sentence follows from it.
           </Callout>
 
-          <h2 id="migration">From C++ to Python</h2>
+          <h2 id="engineering">Engineering notes</h2>
           <p>
-            OWN-AI began as a single C++17 server (cpp-httplib), kept unchanged in {code("legacy/cpp")}. In November 2026 it was
-            reimplemented in Python — NumPy, FastAPI, Pydantic — with AI pair-programming assistance, plus a React + TypeScript
-            workbench. Besides the HNSW fix, the port corrected KD-tree pruning for cosine, built one HNSW graph per metric
-            instead of reusing the cosine graph, stopped the RAG prompt from falling back to “general knowledge”, and added input
-            validation and rate limits. Each change is listed with its test in {code("docs/MIGRATION.md")}.
+            Besides the HNSW fix, testing found and fixed an invalid KD-tree pruning bound for cosine, a single cosine HNSW graph
+            reused for every metric, a RAG prompt that allowed “general knowledge” answers, and citation-only replies counted as
+            grounded. Inputs are validated with Pydantic and model calls are rate-limited. Each fix is listed with its test in{" "}
+            {code("docs/ENGINEERING_NOTES.md")}; the project was built with AI pair-programming assistance.
           </p>
-          <p>63 pytest cases pass (one more runs only with a real Ollama), with ruff and a benchmark smoke run in CI.</p>
+          <p>68 pytest cases pass with a local Ollama (66, with 2 skipped, in CI, which has no model), plus ruff and a benchmark smoke run.</p>
 
           <h2 id="limits">Honest limits</h2>
           <ul>
